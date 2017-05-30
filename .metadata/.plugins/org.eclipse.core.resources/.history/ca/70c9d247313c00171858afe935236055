@@ -1,0 +1,9 @@
+package Map;
+
+public class mapBuilder {
+
+	public static void main(String[] args) {
+		JFrame frame = new JFrame("Loading");
+	}
+
+}

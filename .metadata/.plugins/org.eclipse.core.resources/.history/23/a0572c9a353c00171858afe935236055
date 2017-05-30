@@ -1,0 +1,11 @@
+package Map;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class Elements extends JPanel {
+	public Elements(){
+		JLabel tempText = new JLabel("Add Frame about Platforms and another frame about pickups", JLabel.CENTER);
+		add(tempText);
+	}
+}

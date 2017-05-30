@@ -1,0 +1,37 @@
+package Map;
+
+public class Platform {
+	int x;
+	int y;
+	String pictureFile;
+	
+	public Platform(int x, int y, String PictureFileName){
+		this.x = x;
+		this.y = y;
+		this.pictureFile = PictureFileName;
+	}
+	public int getX() {
+		return x;
+	}
+
+	@Override
+	public int getY() {
+		return y;
+	}
+
+	@Override
+	public void onPickup() {
+		this.onGround = false;
+		//TODO: play audio file...
+	}
+
+	@Override
+	public void draw() {
+		// TODO: add a draw method
+	}
+
+	@Override
+	public boolean onGround() {
+		return onGround;
+	}
+}

@@ -1,0 +1,12 @@
+package Map;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+@SuppressWarnings("serial")
+public class Render extends JFrame {
+	public Render(){
+		JLabel tempText = new JLabel("Testing...", JLabel.CENTER);
+		add(tempText);
+	}
+}

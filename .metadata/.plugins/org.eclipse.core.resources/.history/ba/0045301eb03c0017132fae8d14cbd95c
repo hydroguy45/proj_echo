@@ -1,0 +1,6 @@
+package Map;
+
+public interface Pickups {
+	public int getX();
+	public int getY();
+}

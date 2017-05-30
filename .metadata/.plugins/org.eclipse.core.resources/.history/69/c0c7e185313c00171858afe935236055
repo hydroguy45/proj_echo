@@ -1,0 +1,12 @@
+package Map;
+
+import javax.swing.JFrame;
+
+public class mapBuilder {
+
+	public static void main(String[] args) {
+		JFrame frame = new JFrame("Loading");
+		JPanel screen = new JPanel();//
+	}
+
+}

@@ -1,0 +1,7 @@
+package Map;
+
+import javax.swing.JFrame;
+
+public class Render extends JFrame {
+
+}

@@ -1,0 +1,41 @@
+package Map;
+
+public class AudioLog implements Pickups {
+	int x;
+	int y;
+	boolean onGround;
+	String audioFile;
+	
+	public AudioLog(int x, int y, int FileName){
+		this.x = x;
+		this.y = y;
+		this.audioFile = FileName;
+	}
+	@Override
+	public int getX() {
+		return x;
+	}
+
+	@Override
+	public int getY() {
+		return y;
+	}
+
+	@Override
+	public void onPickup() {
+		this.onGround = false;
+		//TODO: play audio file...
+	}
+
+	@Override
+	public void draw() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean onGround() {
+		return onGround;
+	}
+
+}
