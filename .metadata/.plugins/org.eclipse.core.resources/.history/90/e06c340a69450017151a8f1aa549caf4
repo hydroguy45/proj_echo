@@ -10,11 +10,22 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class mapBuilder {
-	public static Room level;
-	
+
 	public static void main(String[] args) {
 		//Instantiate abstractions
-		level = new Room();
+		Room level = new Room();
+		System.out.println(level.toString());
+		try{
+			FileOutputStream out = new FileOutputStream("test.ser");
+			ObjectOutputStream outObj = new ObjectOutputStream(out);
+			outObj.writeObject(level);
+			outObj.close();
+			out.close();
+			System.out.println("Saved to test.ser...");
+		} catch (IOException i){
+			
+		}
+		
 		//Load GUI
 		JFrame frame = new JFrame("Loading");
 		JPanel render = new Render();//Rendering

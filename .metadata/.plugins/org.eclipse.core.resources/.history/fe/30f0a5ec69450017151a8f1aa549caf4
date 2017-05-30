@@ -25,7 +25,7 @@ public class Elements extends JPanel {
 				try{
 					FileOutputStream out = new FileOutputStream("test.ser");
 					ObjectOutputStream outObj = new ObjectOutputStream(out);
-					outObj.writeObject(mapBuilder.level);
+					outObj.writeObject(level);
 					outObj.close();
 					out.close();
 					System.out.println("Saved to test.ser...");
