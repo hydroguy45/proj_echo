@@ -2,6 +2,7 @@ package Map;
 
 import java.util.ArrayList;
 public class Room implements java.io.Serializable{
+	private static final long serialVersionUID = 1L;
 	ArrayList<Pickups> interactables = new ArrayList<Pickups>();
 	ArrayList<Platform> platforms = new ArrayList<Platform>();
 	String background;

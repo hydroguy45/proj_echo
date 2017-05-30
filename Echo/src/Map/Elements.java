@@ -17,8 +17,19 @@ public class Elements extends JPanel {
 	public Elements(){
 		setLayout(new BorderLayout());
 		setBorder(BorderFactory.createTitledBorder("Map Elements"));
+		JButton add = new JButton("Add");
 		JLabel tempText = new JLabel("<html>Add Frame about Platforms<br> and another frame about pickups</html>", JLabel.CENTER);
 		JButton export = new JButton("Export Level");
+		
+		add.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO: Write addition functions
+				//TODO
+				//TODO
+			}
+		});
+		
 		export.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -35,7 +46,7 @@ public class Elements extends JPanel {
 			}
 		});
 		//TODO: add click behavoir... should just save the serialized room object to a specific file
-		
+		add(add, BorderLayout.NORTH);
 		add(tempText, BorderLayout.CENTER);
 		add(export, BorderLayout.SOUTH);
 	}

@@ -1,6 +1,7 @@
 package Map;
 
 public class AudioLog implements Pickups {
+	private static final long serialVersionUID = 1L;
 	int x;
 	int y;
 	boolean onGround;

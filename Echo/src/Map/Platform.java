@@ -1,6 +1,7 @@
 package Map;
 
 public class Platform implements java.io.Serializable{
+	private static final long serialVersionUID = 1L;
 	int x;
 	int y;
 	String pictureFile;
