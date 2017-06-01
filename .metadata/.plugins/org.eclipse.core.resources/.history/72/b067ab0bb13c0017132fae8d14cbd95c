@@ -1,7 +1,0 @@
-package Map;
-
-import java.util.ArrayList;
-
-public class Room {
-	ArrayList<Pickups> interactables = new ArrayList<Pickups>();
-}

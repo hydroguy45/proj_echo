@@ -1,7 +1,0 @@
-package Map;
-
-import javax.swing.JPanel;
-
-public class Elements extends JPanel {
-
-}

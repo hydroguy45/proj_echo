@@ -4,11 +4,13 @@ public class Platform implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
 	int x;
 	int y;
+	String name;
 	String pictureFile;
 	
-	public Platform(int x, int y, String PictureFileName){
+	public Platform(int x, int y, String PictureFileName, String name){
 		this.x = x;
 		this.y = y;
+		this.name = name;
 		this.pictureFile = PictureFileName;
 	}
 	public int getX() {
