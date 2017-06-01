@@ -1,6 +1,7 @@
 package Map;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileOutputStream;
@@ -10,11 +11,18 @@ import java.io.ObjectOutputStream;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 @SuppressWarnings("serial")
 public class Elements extends JPanel {
+	public static Platform currentPlatform;
+	public static AudioLog currentAudio;
 	public Elements(){
 		setLayout(new BorderLayout());
 		setBorder(BorderFactory.createTitledBorder("Map Elements"));
@@ -32,10 +40,102 @@ public class Elements extends JPanel {
 			i++;
 		}
 		JComboBox<String> platformList = new JComboBox<String>(platforms);
+		addPlatform.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mapBuilder.level.platforms.add(new Platform(0, 0, "null.jpg", "New Platform"));
+				System.out.println("Added new platform");
+				platformList.removeAllItems();
+				for(Platform p: mapBuilder.level.platforms){
+					platformList.addItem(p.name);
+				}
+				platformList.setSelectedIndex(mapBuilder.level.platforms.size() - 1);
+			}
+		});
+		JLabel platformXLabel = new JLabel("Null");
+		JSlider platformXPosition = new JSlider(0, mapBuilder.width);
+		platformXPosition.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				if(currentPlatform != null){
+					currentPlatform.x = platformXPosition.getValue();
+					platformXLabel.setText("X: " + Integer.toString(currentPlatform.x));
+				}
+			}
+		});
+		JLabel platformYLabel = new JLabel("Null");
+		JSlider platformYPosition = new JSlider(0, mapBuilder.width);
+		platformYPosition.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				if(currentPlatform != null){
+					currentPlatform.y = platformYPosition.getValue();
+					platformYLabel.setText("Y: " + Integer.toString(currentPlatform.y));
+				}
+			}
+		});
+		JTextField platformName = new JTextField();
+		platformName.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int i = platformList.getSelectedIndex();
+				currentPlatform.name = platformName.getText();
+				platformList.removeAllItems();
+				for(Platform p: mapBuilder.level.platforms){
+					platformList.addItem(p.name);
+				}
+				platformList.setSelectedIndex(i);;
+			}
+		});
+		JLabel currentPic = new JLabel("null");
+		
+		platformList.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(platformList.getSelectedIndex() != -1){
+					currentPlatform = mapBuilder.level.platforms.get(platformList.getSelectedIndex());
+					platformXLabel.setText("X: " + Integer.toString(currentPlatform.x));
+					platformXPosition.setValue(currentPlatform.x);
+					platformYLabel.setText("Y: " + Integer.toString(currentPlatform.y));
+					platformYPosition.setValue(currentPlatform.y);
+					platformName.setText(currentPlatform.name);
+					currentPic.setText(currentPlatform.pictureFile);
+				}
+			}
+		});
+		JFileChooser pic = new JFileChooser();
+		pic.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				currentPlatform.pictureFile = pic.getSelectedFile().getName();
+				currentPic.setText(currentPlatform.pictureFile);
+			}
+		});
+		
+		JButton picButton = new JButton("Choose Texture File");
+		picButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pic.showOpenDialog(null);
+			}
+		});
 		JPanel platformEditor = new JPanel();
-		//TODO: add editing options for all of the fields with an auto update
+		platformEditor.setBorder(BorderFactory.createTitledBorder("Platform Editor"));
+		platformEditor.setLayout(new GridLayout(20, 1));
 		platformEditor.add(platformList);
+		platformEditor.add(platformXLabel);
+		platformEditor.add(platformXPosition);
+		platformEditor.add(platformYLabel);
+		platformEditor.add(platformYPosition);
+		platformEditor.add(platformName);
+		platformEditor.add(currentPic);
+		platformEditor.add(picButton);
+		
+		
+		
 		//TODO: make an audio log editor too...
+		
+		
 		JPanel editor = new JPanel();
 		editor.add(platformEditor);
 	//BOTTOM
