@@ -23,6 +23,7 @@ public class Visions extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					mapBuilder.currentVision = v;
 					System.out.println("Changing vision type to "+v.toString());
+					mapBuilder.render.repaint();
 				}
 			});
 		}
