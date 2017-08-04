@@ -1,0 +1,19 @@
+FOR PEOPLE NEW TO UPGRADE:
+-The Map package is almost done
+-The Game package is where it is at! However, if you are anxious about adding your code, feel free to just make some maps. We're going to need a lot of content.
+-The project is broken up into a couple areas on the programming side
+	>Data storage and loading (see Chris)
+	>Physics (see Alex)
+	>In game UI (tbd)
+	>Menuscreen UI (tbd)
+	>Gameplay/Interactions (tbd)
+
+TODO:
+-Requires elements in pickups and platform to load a file
+-Textures are saved as Files and not absolute texture paths for pickups and platforms (use the background image as a template for this)
+-Should get a pop-up if import or export fails
+
+GOALS:
+-Get a working overall map editor working
+-Work this into the game package
+-Add more room for other pickups besides just AudioLogs... may need to discuss all forms of pick ups in the club meeting

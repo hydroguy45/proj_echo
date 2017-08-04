@@ -2,7 +2,11 @@ package Map;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 /*Overall TODO:
  * 8) getting saving working for pictures and audio
@@ -25,7 +29,14 @@ public class Render extends JPanel {
 			g.setColor(Color.white);
 			g.clearRect(0, 0, width, height);
 		} else {
-			g.drawImage(mapBuilder.level.background, 0, 0, width, height, 0, 0, width, height, null);	
+			File backgroundFile = new File(mapBuilder.level.background);
+			BufferedImage background;
+			try {
+				background = ImageIO.read(backgroundFile);
+				g.drawImage(background, 0, 0, width, height, 0, 0, width, height, null);	
+			} catch (IOException e) {
+				System.out.println("Did you move the location of the background image :(");
+			}
 		}
 		for(Pickups p: rm.interactables){
 			p.draw(g);

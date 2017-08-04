@@ -42,11 +42,7 @@ public class Elements extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				File f = backgroundFile.getSelectedFile();
-				try {
-					mapBuilder.level.background = ImageIO.read(f);
-				} catch (IOException e1) {
-					mapBuilder.level.background = null;
-				}
+				mapBuilder.level.background = f.getAbsolutePath();
 				mapBuilder.render.repaint();
 			}
 		});
@@ -372,12 +368,22 @@ public class Elements extends JPanel {
 					for(Platform p: mapBuilder.level.platforms){
 						platformList.addItem(p.name);
 					}
-					platformList.setSelectedIndex(0);
+					try{
+						platformList.setSelectedIndex(0);
+					}
+					finally{
+						System.out.println("Stop testing, just put some platforms down");
+					}
 					audioLogList.removeAllItems();
 					for(AudioLog p: mapBuilder.level.interactables){
 						audioLogList.addItem(p.name);
 					}
-					audioLogList.setSelectedIndex(0);
+					try{
+						audioLogList.setSelectedIndex(0);
+					}
+					finally{
+						System.out.println("Stop testing, just put some platforms down");
+					}
 					mapBuilder.render.repaint();
 				} catch (IOException | ClassNotFoundException e1) {
 					System.out.println("Failed import");

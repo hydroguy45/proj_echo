@@ -1,0 +1,9 @@
+TODO:
+-Requires elements in pickups and platform to load a file
+-Textures are saved as Files and not absolute texture paths for pickups and platforms (use the background image as a template for this)
+-Should get a pop-up if import or export fails
+
+GOALS:
+-Get a working overall map editor working
+-Work this into the game package
+-Add more room for other pickups besides just AudioLogs
