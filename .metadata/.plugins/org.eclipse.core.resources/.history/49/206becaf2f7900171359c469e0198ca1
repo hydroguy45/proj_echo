@@ -1,8 +1,0 @@
-TODO:
--Requires elements in pickups and platform to load a file
--Textures are saved as Files and not absolute texture paths
--Should get a pop-up if import or export fails
-
-GOALS:
--Get a working overall map editor working
--work this into the game package
