@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class mapBuilder {
+	//TODO: when you swap from room to map layout you need to change the width and height to reflect the new room scaling
 	//Adding or changing a vision type here is sufficient, the rest of the app will update accordingly 
 	enum View {
 		Xray,
