@@ -17,14 +17,11 @@ public class AudioLog implements Pickups {
 	int width;
 	int height;
 	String name;
-	
 	boolean onGround;
 	String audioFile;
 	String pictureFile;
-	
+	BufferedImage img = null;
 	Set<mapBuilder.View> visibleRange = new HashSet<mapBuilder.View>();
-	File audio;
-	private BufferedImage img;
 	
 	public AudioLog(int x, int y, String AudioFileName, String PictureFileName, String name){
 		this.x = x;
@@ -34,14 +31,6 @@ public class AudioLog implements Pickups {
 		this.audioFile = AudioFileName;
 		this.pictureFile = PictureFileName;
 		this.name = name;
-		this.audio = new File(AudioFileName);
-		try {
-			this.img = ImageIO.read( new File(PictureFileName));
-			width = img.getWidth();
-			height = img.getHeight();
-		} catch (IOException e) {
-			this.img = null;
-		}
 	}
 	@Override
 	public int getX() {
@@ -59,20 +48,18 @@ public class AudioLog implements Pickups {
 		//TODO: play audio file...
 	}
 	
-	public void updatePicture(File f){
-		try {
-			this.img = ImageIO.read(f);
-			width = img.getWidth();
-			height = img.getHeight();
-		} catch (IOException e) {
-			System.out.println("File not loaded");
-			this.img = null;
-		}
-	}
-	
 	@Override
 	public void draw(Graphics g) {
 		if(visibleRange.contains(mapBuilder.currentVision)){
+			BufferedImage img;
+			try {
+				img = ImageIO.read(new File(this.pictureFile));
+				width = img.getWidth();
+				height = img.getHeight();
+			} catch (IOException e) {
+				System.out.println("File not loaded");
+				img = null;
+			}
 			if(img == null){
 				g.setColor(Color.green);
 				g.fillRect(x, y, width, height);

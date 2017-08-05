@@ -157,9 +157,8 @@ public class Elements extends JPanel {
 		pic.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				currentPlatform.pictureFile = pic.getSelectedFile().getName();
+				currentPlatform.pictureFile = pic.getSelectedFile().getAbsolutePath();
 				currentPic.setText(currentPlatform.pictureFile);
-				currentPlatform.updatePicture(pic.getSelectedFile());
 				mapBuilder.render.repaint();
 			}
 		});
@@ -290,9 +289,8 @@ public class Elements extends JPanel {
 		audioFile.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				currentAudioLog.audioFile = audioFile.getSelectedFile().getName();
+				currentAudioLog.audioFile = audioFile.getSelectedFile().getAbsolutePath();
 				currentLogFile.setText(currentAudioLog.audioFile);
-				currentAudioLog.audio = audioFile.getSelectedFile();
 				mapBuilder.render.repaint();
 			}
 		});
@@ -309,9 +307,8 @@ public class Elements extends JPanel {
 		audioPic.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				currentAudioLog.pictureFile = audioPic.getSelectedFile().getName();
+				currentAudioLog.pictureFile = audioPic.getSelectedFile().getAbsolutePath();
 				currentLogPic.setText(currentAudioLog.pictureFile);
-				currentAudioLog.updatePicture(audioPic.getSelectedFile());
 				mapBuilder.render.repaint();
 			}
 		});
@@ -347,6 +344,7 @@ public class Elements extends JPanel {
 		editor.add(platformEditor, BorderLayout.WEST);
 		editor.add(audioEditor, BorderLayout.EAST);
 	//BOTTOM
+		JLabel error = new JLabel("");
 		JButton importer = new JButton("Import Level");
 		
 		JFileChooser importFile = new JFileChooser();
@@ -366,25 +364,15 @@ public class Elements extends JPanel {
 					for(Platform p: mapBuilder.level.platforms){
 						platformList.addItem(p.name);
 					}
-					try{
-						platformList.setSelectedIndex(0);
-					}
-					finally{
-						System.out.println("Stop testing, just put some platforms down");
-					}
 					audioLogList.removeAllItems();
 					for(AudioLog p: mapBuilder.level.interactables){
 						audioLogList.addItem(p.name);
 					}
-					try{
-						audioLogList.setSelectedIndex(0);
-					}
-					finally{
-						System.out.println("Stop testing, just put some platforms down");
-					}
 					mapBuilder.render.repaint();
+					error.setText("");
 				} catch (IOException | ClassNotFoundException e1) {
 					System.out.println("Failed import");
+					error.setText("Failed import");
 				}
 			}
 		});
@@ -412,8 +400,10 @@ public class Elements extends JPanel {
 					outObj.close();
 					out.close();
 					System.out.println("Saved");
+					error.setText("Saved");
 				} catch (IOException e1) {
-					System.out.println("Saving failed");
+					System.out.println("Saving failed: "+ e1);
+					error.setText("Saving failed");
 				}
 				
 			}
@@ -427,6 +417,7 @@ public class Elements extends JPanel {
 		JPanel end = new JPanel();
 		end.add(importer);
 		end.add(export);
+		end.add(error);
 		//Naming schemes got out of control
 		add.setLayout(new BorderLayout());
 		add.add(backgroundChooser, BorderLayout.NORTH);

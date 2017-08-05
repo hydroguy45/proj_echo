@@ -18,7 +18,7 @@ public class Platform implements java.io.Serializable{
 	int height;
 	String name;
 	String pictureFile;
-	BufferedImage img;
+	BufferedImage img = null;
 	Set<mapBuilder.View> visibleRange = new HashSet<mapBuilder.View>();
 	
 	public Platform(int x, int y, String PictureFileName, String name){
@@ -28,13 +28,6 @@ public class Platform implements java.io.Serializable{
 		this.height = 25; 
 		this.name = name;
 		this.pictureFile = PictureFileName;
-		try {
-			this.img = ImageIO.read( new File(PictureFileName));
-			width = img.getWidth();
-			height = img.getHeight();
-		} catch (IOException e) {
-			this.img = null;
-		}
 	}
 	public int getX() {
 		return x;
@@ -44,19 +37,17 @@ public class Platform implements java.io.Serializable{
 		return y;
 	}
 	
-	public void updatePicture(File f){
-		try {
-			this.img = ImageIO.read(f);
-			width = img.getWidth();
-			height = img.getHeight();
-		} catch (IOException e) {
-			System.out.println("File not loaded");
-			this.img = null;
-		}
-	}
-
 	public void draw(Graphics g) {
 		if(visibleRange.contains(mapBuilder.currentVision)){
+			BufferedImage img;
+			try {
+				img = ImageIO.read(new File(this.pictureFile));
+				width = img.getWidth();
+				height = img.getHeight();
+			} catch (IOException e) {
+				System.out.println("File not loaded");
+				img = null;
+			}
 			if(img == null){
 				g.setColor(Color.blue);
 				g.fillRect(x, y, width, height);
