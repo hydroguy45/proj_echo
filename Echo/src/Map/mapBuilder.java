@@ -12,10 +12,11 @@ public class mapBuilder {
 		Xray,
 		UltraViolet,
 		Radio,
-		VisibleSpectrum
+		VisibleSpectrum //Shouldn't everything be in the visible spectrum... Plot convenience? Maybe one big reveal at the end?
 	}
 	public static View currentVision = View.VisibleSpectrum;
 	public static Room level;
+	public static Map map;
 	public static final int width = 920;//CHANGE WIDTH AND HEIGHT HERE
 	public static final int height = 760;
 	public static JFrame frame;
@@ -23,11 +24,24 @@ public class mapBuilder {
 	public static JPanel elements;//Elements
 	public static JPanel visions; //Visions
 	public static void main(String[] args) {
+		roomEdit();
+	}
+	static void mapEdit(){
+		map = new Map();
+		frame = new JFrame("Map Editor");
+		visions = new Visions(); //This allow us to see the effect of different spectrums on the render
+		//TODO: make a new mapElements class
+		//TODO: make a new mapRender class (this should sort of mirror the set up for the roomEditor. Use a menu button to change modes.
+		frame.setLayout(new BorderLayout());
+		frame.add(visions, BorderLayout.WEST);
+		frame.setSize(width + 586, height + 49); //May need to rework this approximation when the elements tab changes
+	}
+	static void roomEdit(){
 		//Instantiate abstractions
-		level = new Room();
+		level = new Room(width, height);
 		//Load GUI
 		//TODO: make a menu selector or button for doing room to room arrangements instead of just within room arrangements
-		frame = new JFrame("Level Editor");
+		frame = new JFrame("Room Editor");
 		render = new Render();//Rendering
 		elements = new Elements();//Elements
 		visions = new Visions(); //Visions

@@ -17,12 +17,14 @@ public class Room implements java.io.Serializable{
 	boolean canGoSouth = false;
 	boolean canGoEast = false;
 	boolean canGoWest = false;
-	public Room(){
+	int width;
+	int height;
+	public Room(int w, int h){
 		System.out.println("Instantiating a room...");
+		width = w;
+		height = h;
 	}
 	void draw(Graphics g){
-		int width = mapBuilder.width;
-		int height = mapBuilder.height;
 		Room rm = mapBuilder.level;
 		if(mapBuilder.level.background == null){
 			g.setColor(Color.white);
