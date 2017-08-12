@@ -24,17 +24,21 @@ public class mapBuilder {
 	public static JPanel elements;//Elements
 	public static JPanel visions; //Visions
 	public static void main(String[] args) {
-		roomEdit();
+		//roomEdit();
+		mapEdit();
 	}
 	static void mapEdit(){
 		map = new Map();
 		frame = new JFrame("Map Editor");
 		visions = new Visions(); //This allow us to see the effect of different spectrums on the render
-		//TODO: make a new mapElements class
-		//TODO: make a new mapRender class (this should sort of mirror the set up for the roomEditor. Use a menu button to change modes.
+		render = new mapRender();//Rendering
+		elements = new mapElements();//Elements
 		frame.setLayout(new BorderLayout());
 		frame.add(visions, BorderLayout.WEST);
+		frame.add(render, BorderLayout.CENTER);
+		frame.add(elements, BorderLayout.EAST);
 		frame.setSize(width + 586, height + 49); //May need to rework this approximation when the elements tab changes
+		frame.setVisible(true);
 	}
 	static void roomEdit(){
 		//Instantiate abstractions

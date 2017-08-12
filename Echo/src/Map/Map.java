@@ -8,7 +8,7 @@ public class Map {
 	public Map() {
 		RoomLayout = new ArrayList<ArrayList<Room>>();
 	}
-	void draw(Graphics g){
+	void draw(Graphics g, int x, int y, int scale){
 		//Write this to use the draw function of every room
 
 	}
