@@ -24,7 +24,8 @@ public class Room implements java.io.Serializable{
 		width = w;
 		height = h;
 	}
-	void draw(Graphics g){
+	void draw(Graphics g, int scale){
+	//TODO: factor in scale
 		Room rm = mapBuilder.level;
 		if(mapBuilder.level.background == null){
 			g.setColor(Color.white);

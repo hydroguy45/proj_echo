@@ -25,6 +25,6 @@ public class mapRender extends JPanel {
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		//Should take in an x, y, and scale
-		mapBuilder.map.draw(g, xOffset, yOffset, scale);
+		mapBuilder.map.draw(g, xOffset, yOffset, selectedX, selectedY, scale);
 	}
 }
