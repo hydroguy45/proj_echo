@@ -28,6 +28,9 @@ public class Map {
 					Room room = RoomLayout.get(xCoord).get(yCoord);
 					Graphics roomG = g.create((xCoord-x)/scale*mapBuilder.width, (yCoord-y)/scale*mapBuilder.height, mapBuilder.width/scale, mapBuilder.height/scale);
 					room.draw(roomG, scale);
+					if(xCoord == highlightedX && yCoord == highlightedY){
+						g.drawRect((xCoord-x)/scale*mapBuilder.width, (yCoord-y)/scale*mapBuilder.height, mapBuilder.width/scale, mapBuilder.height/scale);
+					}
 				}
 			}
 		}
