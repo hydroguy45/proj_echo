@@ -78,9 +78,19 @@ public class mapElements extends JPanel {
 					ObjectInputStream in = new ObjectInputStream(f);
 					Room room = (Room) in.readObject();
 					if(mapBuilder.map.RoomLayout.size() > (Integer) x.getValue()){
-						//If the x coordinate has other values
-						ArrayList<Room> xColumn = mapBuilder.map.RoomLayout.get((Integer) x.getValue());
-						xColumn.set((Integer) y.getValue(), room);
+						if(mapBuilder.map.RoomLayout.get((Integer) x.getValue()) == null){
+							ArrayList<Room> xColumn = mapBuilder.map.RoomLayout.get((Integer) x.getValue());
+							xColumn = new ArrayList<Room>();
+							xColumn.add((Integer) y.getValue(), room);
+						} else {
+							//If the x coordinate has other values
+							ArrayList<Room> xColumn = mapBuilder.map.RoomLayout.get((Integer) x.getValue());
+							try{
+								xColumn.set((Integer) y.getValue(), room);
+							} catch (java.lang.IndexOutOfBoundsException e1){
+								xColumn.add((Integer) y.getValue(), room);
+							}
+						}
 					} else {
 						//If this is a first room for that x coord
 						ArrayList<Room> list = new ArrayList<Room>();
@@ -94,6 +104,7 @@ public class mapElements extends JPanel {
 				}
 				//TODO: configure this to actually add stuff
 				//mapBuilder.level.background = f.getAbsolutePath();
+				mapBuilder.map.printRoomStruct();
 				mapBuilder.render.repaint();
 			}
 		});
@@ -113,6 +124,7 @@ public class mapElements extends JPanel {
 				mapBuilder.map.RoomLayout.get((Integer) x.getValue()).remove((Integer) y.getValue());
 			}
 		});
+		add(remove);
 		//Import and Export Data
 		add(panControls);
 	}

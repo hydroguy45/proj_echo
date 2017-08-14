@@ -7,6 +7,19 @@ public class Map {
 	ArrayList<ArrayList<Room>> RoomLayout; //Goes row, column like a matrix
 	public Map() {
 		RoomLayout = new ArrayList<ArrayList<Room>>();
+		RoomLayout.add(new ArrayList<Room>());
+		System.out.println("X size:"+RoomLayout.size());
+		System.out.println("Y size:"+RoomLayout.get(0).size());
+	}
+	void printRoomStruct(){
+		if(RoomLayout.size()>0 && RoomLayout.get(0).size()>0){
+			for(int x=0;x<RoomLayout.size(); x++){
+				for(int y=0;y<RoomLayout.get(x).size(); y++){
+					System.out.print("X ");
+				}
+				System.out.print("\n\n");
+			}
+		}
 	}
 	/** Used to draw the map to a certain context
 	 * @param scale The amount of rooms that can fit on the height or width
@@ -24,7 +37,7 @@ public class Map {
 		g.clearRect(0, 0, mapBuilder.width, mapBuilder.height);
 		for(int xCoord = x; xCoord < x + scale; xCoord++){
 			for(int yCoord = y; yCoord < y + scale; yCoord++){
-				if(RoomLayout.size()>xCoord && RoomLayout.get(0).size()>yCoord){
+				if(RoomLayout.size()>xCoord && RoomLayout.get(xCoord).size()>yCoord){
 					Room room = RoomLayout.get(xCoord).get(yCoord);
 					Graphics roomG = g.create((xCoord-x)/scale*mapBuilder.width, (yCoord-y)/scale*mapBuilder.height, mapBuilder.width/scale, mapBuilder.height/scale);
 					room.draw(roomG, scale);

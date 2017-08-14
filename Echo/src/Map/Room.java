@@ -26,12 +26,11 @@ public class Room implements java.io.Serializable{
 	}
 	void draw(Graphics g, int scale){
 	//TODO: factor in scale
-		Room rm = mapBuilder.level;
-		if(mapBuilder.level.background == null){
+		if(this.background == null){
 			g.setColor(Color.white);
 			g.clearRect(0, 0, width, height);
 		} else {
-			File backgroundFile = new File(mapBuilder.level.background);
+			File backgroundFile = new File(this.background);
 			BufferedImage background;
 			try {
 				background = ImageIO.read(backgroundFile);
@@ -40,10 +39,10 @@ public class Room implements java.io.Serializable{
 				System.out.println("Did you move the location of the background image :(");
 			}
 		}
-		for(Pickups p: rm.interactables){
+		for(Pickups p: this.interactables){
 			p.draw(g);
 		}
-		for(Platform p: rm.platforms){
+		for(Platform p: this.platforms){
 			p.draw(g);
 		}
 	}
