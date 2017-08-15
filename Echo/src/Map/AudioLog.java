@@ -49,7 +49,7 @@ public class AudioLog implements Pickups {
 	}
 	
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics g, int scale) {
 		if(visibleRange.contains(mapBuilder.currentVision)){
 			BufferedImage img;
 			try {
@@ -62,14 +62,14 @@ public class AudioLog implements Pickups {
 			}
 			if(img == null){
 				g.setColor(Color.green);
-				g.fillRect(x, y, width, height);
+				g.fillRect(x/scale, y/scale, width/scale, height/scale);
 				g.setColor(Color.white);
 			} else {
-				g.drawImage(img, x, y, x+img.getWidth(), y+img.getHeight(), 0, 0, img.getWidth(), img.getHeight(), null);				
+				g.drawImage(img, x/scale, y/scale, (x+img.getWidth())/scale, (y+img.getHeight())/scale, 0, 0, img.getWidth(), img.getHeight(), null);				
 			}
 		} else {
 			g.setColor(Color.green);
-			g.drawRect(x, y, width, height);
+			g.drawRect(x/scale, y/scale, width/scale, height/scale);
 			g.setColor(Color.white);
 		}
 		

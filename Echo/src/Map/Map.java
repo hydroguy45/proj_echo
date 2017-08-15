@@ -1,5 +1,6 @@
 package Map;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -34,19 +35,32 @@ public class Map {
 		// 1 unit scale --> 1 room width by 1 room height
 		// 2 unit scale --> 4 rooms on the screen
 		// 3 unit scale --> 9 rooms on the screen
+		g.setColor(Color.BLACK);
 		g.clearRect(0, 0, mapBuilder.width, mapBuilder.height);
+		//Draw individual rooms
 		for(int xCoord = x; xCoord < x + scale; xCoord++){
 			for(int yCoord = y; yCoord < y + scale; yCoord++){
-				if(RoomLayout.size()>xCoord && RoomLayout.get(xCoord).size()>yCoord){
-					Room room = RoomLayout.get(xCoord).get(yCoord);
-					Graphics roomG = g.create((xCoord-x)/scale*mapBuilder.width, (yCoord-y)/scale*mapBuilder.height, mapBuilder.width/scale, mapBuilder.height/scale);
-					room.draw(roomG, scale);
-					if(xCoord == highlightedX && yCoord == highlightedY){
-						g.drawRect((xCoord-x)/scale*mapBuilder.width, (yCoord-y)/scale*mapBuilder.height, mapBuilder.width/scale, mapBuilder.height/scale);
+				try{
+					if(RoomLayout.size()>xCoord && RoomLayout.get(xCoord).size()>yCoord){
+						Room room = RoomLayout.get(xCoord).get(yCoord);
+						Graphics roomG = g.create(((xCoord-x)*mapBuilder.width)/scale, ((yCoord-y)*mapBuilder.height)/scale, mapBuilder.width/scale, mapBuilder.height/scale);
+						room.draw(roomG, scale);
 					}
+				} catch (java.lang.NullPointerException | java.lang.IndexOutOfBoundsException e){
+					//Do nothing
 				}
 			}
 		}
-
+		//Draw grid lines
+		g.setColor(new Color(193,210,255));
+		for(int xCoord = 0; xCoord<=scale; xCoord++){
+			g.drawLine((xCoord*mapBuilder.width)/scale, mapBuilder.height, (xCoord*mapBuilder.width)/scale, 0);
+		}
+		for(int yCoord = 0; yCoord<=scale; yCoord++){
+			g.drawLine(0, (yCoord*mapBuilder.height)/scale, mapBuilder.width, (yCoord*mapBuilder.height)/scale);
+		}
+		//Draw selected portion
+		g.setColor(Color.BLACK);
+		g.drawRect(((highlightedX-x)*mapBuilder.width)/scale, ((highlightedY-y)*mapBuilder.height)/scale, mapBuilder.width/scale, mapBuilder.height/scale);
 	}
 }

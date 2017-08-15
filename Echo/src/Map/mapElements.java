@@ -74,6 +74,7 @@ public class mapElements extends JPanel {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				mapRender.selectedX = (Integer) x.getValue();
+				mapBuilder.render.repaint();
 			}
 		});
 		add(x);
@@ -84,10 +85,11 @@ public class mapElements extends JPanel {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				mapRender.selectedY = (Integer) y.getValue();
+				mapBuilder.render.repaint();
 			}
 		});
 		add(y);
-		JFileChooser addFile = new JFileChooser();
+		JFileChooser addFile = new JFileChooser("../MapData/Room");
 		addFile.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -114,7 +116,10 @@ public class mapElements extends JPanel {
 						}
 					} else {
 						//If this is a first room for that x coord 
-						ArrayList<Room> list = new ArrayList<Room>();
+						ArrayList<Room> list = new ArrayList<Room>((Integer) y.getValue()+1);
+						for(int i=0; i<(Integer) y.getValue(); i++){
+							list.add(null);
+						}
 						list.add((Integer) y.getValue(), room);
 						mapBuilder.map.RoomLayout.add((Integer) x.getValue(), list);
 					}

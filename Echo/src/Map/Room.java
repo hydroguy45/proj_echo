@@ -34,16 +34,16 @@ public class Room implements java.io.Serializable{
 			BufferedImage background;
 			try {
 				background = ImageIO.read(backgroundFile);
-				g.drawImage(background, 0, 0, width, height, 0, 0, width, height, null);	
+				g.drawImage(background, 0, 0, width/scale, height/scale, 0, 0, background.getWidth(), background.getHeight(), null);	
 			} catch (IOException e) {
 				System.out.println("Did you move the location of the background image :(");
 			}
 		}
 		for(Pickups p: this.interactables){
-			p.draw(g);
+			p.draw(g, scale);
 		}
 		for(Platform p: this.platforms){
-			p.draw(g);
+			p.draw(g, scale);
 		}
 	}
 }
