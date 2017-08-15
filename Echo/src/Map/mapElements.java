@@ -13,6 +13,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicArrowButton;
 
 @SuppressWarnings("serial")
@@ -30,6 +32,7 @@ public class mapElements extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				mapRender.yOffset--;
+				mapBuilder.render.repaint();
 			}
 		});
 		JButton panDown = new BasicArrowButton(BasicArrowButton.SOUTH);
@@ -37,6 +40,7 @@ public class mapElements extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				mapRender.yOffset++;
+				mapBuilder.render.repaint();
 			}
 		});
 		JButton panEast = new BasicArrowButton(BasicArrowButton.EAST);
@@ -44,6 +48,7 @@ public class mapElements extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				mapRender.xOffset++;
+				mapBuilder.render.repaint();
 			}
 		});
 		JButton panWest = new BasicArrowButton(BasicArrowButton.WEST);
@@ -51,6 +56,7 @@ public class mapElements extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				mapRender.xOffset--;
+				mapBuilder.render.repaint();
 			}
 		});
 		JPanel panControls = new JPanel();
@@ -64,10 +70,22 @@ public class mapElements extends JPanel {
 		JLabel xLabel = new JLabel("X:");
 		add(xLabel);
 		JSpinner x = new JSpinner();
+		x.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				mapRender.selectedX = (Integer) x.getValue();
+			}
+		});
 		add(x);
 		JLabel yLabel = new JLabel("Y:");
 		add(yLabel);
 		JSpinner y = new JSpinner();
+		y.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				mapRender.selectedY = (Integer) y.getValue();
+			}
+		});
 		add(y);
 		JFileChooser addFile = new JFileChooser();
 		addFile.addActionListener(new ActionListener() {
@@ -79,6 +97,7 @@ public class mapElements extends JPanel {
 					Room room = (Room) in.readObject();
 					if(mapBuilder.map.RoomLayout.size() > (Integer) x.getValue()){
 						if(mapBuilder.map.RoomLayout.get((Integer) x.getValue()) == null){
+							//The map hasn't instantiated this x coord's y column
 							ArrayList<Room> xColumn = mapBuilder.map.RoomLayout.get((Integer) x.getValue());
 							xColumn = new ArrayList<Room>();
 							xColumn.add((Integer) y.getValue(), room);
@@ -86,16 +105,18 @@ public class mapElements extends JPanel {
 							//If the x coordinate has other values
 							ArrayList<Room> xColumn = mapBuilder.map.RoomLayout.get((Integer) x.getValue());
 							try{
+								//Another room for that y coord exists
 								xColumn.set((Integer) y.getValue(), room);
 							} catch (java.lang.IndexOutOfBoundsException e1){
+								//This is the first room for that y coord
 								xColumn.add((Integer) y.getValue(), room);
 							}
 						}
 					} else {
-						//If this is a first room for that x coord
+						//If this is a first room for that x coord 
 						ArrayList<Room> list = new ArrayList<Room>();
-						list.set((Integer) y.getValue(), room);
-						mapBuilder.map.RoomLayout.set((Integer) x.getValue(), list);
+						list.add((Integer) y.getValue(), room);
+						mapBuilder.map.RoomLayout.add((Integer) x.getValue(), list);
 					}
 					in.close();
 					f.close();
@@ -126,6 +147,19 @@ public class mapElements extends JPanel {
 		});
 		add(remove);
 		//Import and Export Data
+		//Scaling
+		JLabel scaleLabel = new JLabel("Scale:");
+		JSpinner scale = new JSpinner();
+		scale.setValue(1);
+		scale.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				mapRender.scale = (Integer) scale.getValue();
+				mapBuilder.render.repaint();
+			}
+		});
+		add(scaleLabel);
+		add(scale);
 		add(panControls);
 	}
 }

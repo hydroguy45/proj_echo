@@ -45,7 +45,7 @@ public class Platform implements java.io.Serializable{
 				width = img.getWidth();
 				height = img.getHeight();
 			} catch (IOException e) {
-				System.out.println("File not loaded");
+				System.out.println("Platform texture file not loaded");
 				img = null;
 			}
 			if(img == null){

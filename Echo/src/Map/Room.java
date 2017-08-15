@@ -27,7 +27,7 @@ public class Room implements java.io.Serializable{
 	void draw(Graphics g, int scale){
 	//TODO: factor in scale
 		if(this.background == null){
-			g.setColor(Color.white);
+			g.setColor(Color.gray);
 			g.clearRect(0, 0, width, height);
 		} else {
 			File backgroundFile = new File(this.background);

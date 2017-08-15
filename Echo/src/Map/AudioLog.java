@@ -57,7 +57,7 @@ public class AudioLog implements Pickups {
 				width = img.getWidth();
 				height = img.getHeight();
 			} catch (IOException e) {
-				System.out.println("File not loaded");
+				System.out.println("Audiolog texture file not loaded");
 				img = null;
 			}
 			if(img == null){
