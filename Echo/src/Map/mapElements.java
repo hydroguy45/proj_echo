@@ -1,13 +1,17 @@
 package Map;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -31,7 +35,9 @@ public class mapElements extends JPanel {
 		panUp.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				mapRender.yOffset--;
+				if(mapRender.yOffset != 0){
+					mapRender.yOffset--;
+				}
 				mapBuilder.render.repaint();
 			}
 		});
@@ -55,7 +61,9 @@ public class mapElements extends JPanel {
 		panWest.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				mapRender.xOffset--;
+				if(mapRender.xOffset != 0){
+					mapRender.xOffset--;
+				}
 				mapBuilder.render.repaint();
 			}
 		});
@@ -67,8 +75,10 @@ public class mapElements extends JPanel {
 		panControls.add(panWest, BorderLayout.WEST);
 		
 		//Add and Delete Rooms
+		JPanel beginning = new JPanel();
+		beginning.setLayout(new GridLayout(3,2));
 		JLabel xLabel = new JLabel("X:");
-		add(xLabel);
+		beginning.add(xLabel);
 		JSpinner x = new JSpinner();
 		x.addChangeListener(new ChangeListener() {
 			@Override
@@ -77,9 +87,9 @@ public class mapElements extends JPanel {
 				mapBuilder.render.repaint();
 			}
 		});
-		add(x);
+		beginning.add(x);
 		JLabel yLabel = new JLabel("Y:");
-		add(yLabel);
+		beginning.add(yLabel);
 		JSpinner y = new JSpinner();
 		y.addChangeListener(new ChangeListener() {
 			@Override
@@ -88,7 +98,7 @@ public class mapElements extends JPanel {
 				mapBuilder.render.repaint();
 			}
 		});
-		add(y);
+		beginning.add(y);
 		JFileChooser addFile = new JFileChooser("../MapData/Room");
 		addFile.addActionListener(new ActionListener() {
 			@Override
@@ -142,7 +152,7 @@ public class mapElements extends JPanel {
 				addFile.showOpenDialog(null);
 			}
 		});
-		add(addChooser);
+		beginning.add(addChooser);
 		JButton remove = new JButton("Remove");
 		remove.addActionListener(new ActionListener() {
 			@Override
@@ -150,7 +160,9 @@ public class mapElements extends JPanel {
 				mapBuilder.map.RoomLayout.get((Integer) x.getValue()).remove((Integer) y.getValue());
 			}
 		});
-		add(remove);
+		beginning.add(remove);
+		setLayout(new BorderLayout());
+		add(beginning, BorderLayout.NORTH);
 		//Import and Export Data
 		//Scaling
 		JLabel scaleLabel = new JLabel("Scale:");
@@ -163,8 +175,81 @@ public class mapElements extends JPanel {
 				mapBuilder.render.repaint();
 			}
 		});
-		add(scaleLabel);
-		add(scale);
-		add(panControls);
+		JPanel middle = new JPanel();
+		middle.setBorder(BorderFactory.createTitledBorder("Moving Around"));
+		middle.add(scaleLabel);
+		middle.add(scale);
+		middle.add(panControls);
+		add(middle, BorderLayout.CENTER);
+		JPanel end = new JPanel();
+		JButton swap = new JButton("Room Editor");
+		swap.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mapBuilder.frame.setVisible(false);
+				mapBuilder.frame.disable();
+				mapBuilder.roomEdit();
+			}
+		});
+		end.add(swap);
+		JButton importer = new JButton("Import Map");
+		
+		JFileChooser importFile = new JFileChooser("../MapData/Map");
+		importFile.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				//De-serialize, and setequal to mapBuilder.level
+				FileInputStream f;
+				try {
+					f = new FileInputStream(importFile.getSelectedFile().getAbsolutePath());
+					ObjectInputStream in = new ObjectInputStream(f);
+					Map map = (Map) in.readObject();
+					in.close();
+					f.close();
+					mapBuilder.map = map;
+					mapBuilder.render.repaint();
+				} catch (IOException | ClassNotFoundException e1) {
+					System.out.println("Failed import");
+				}
+			}
+		});
+		importer.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				importFile.showOpenDialog(null);
+				
+			}
+		});
+		end.add(importer);
+		JButton export = new JButton("Export Level");
+		
+		JFileChooser exportFile = new JFileChooser("../MapData/Map");
+		exportFile.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String f = exportFile.getSelectedFile().getAbsolutePath();
+				try {
+					FileOutputStream out = new FileOutputStream(f);
+					ObjectOutputStream outObj;
+					outObj = new ObjectOutputStream(out);
+					outObj.writeObject(mapBuilder.map);
+					outObj.close();
+					out.close();
+					System.out.println("Saved");
+				} catch (IOException e1) {
+					System.out.println("Saving failed: "+ e1);
+				}
+				
+			}
+		});
+		export.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				exportFile.showOpenDialog(null);
+			}
+		});
+		end.add(export);
+		end.setLayout(new GridLayout(3,1));
+		add(end, BorderLayout.SOUTH);
 	}
 }

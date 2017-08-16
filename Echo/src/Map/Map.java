@@ -4,7 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-public class Map {
+
+public class Map implements java.io.Serializable{
 	ArrayList<ArrayList<Room>> RoomLayout; //Goes row, column like a matrix
 	public Map() {
 		RoomLayout = new ArrayList<ArrayList<Room>>();

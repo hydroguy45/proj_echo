@@ -35,7 +35,7 @@ public class Elements extends JPanel {
 	
 	//TOP
 		//backgroundChooser
-		JFileChooser backgroundFile = new JFileChooser();
+		JFileChooser backgroundFile = new JFileChooser("../MapData/Textures");
 		backgroundFile.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -153,7 +153,7 @@ public class Elements extends JPanel {
 				}
 			}
 		});
-		JFileChooser pic = new JFileChooser();
+		JFileChooser pic = new JFileChooser("../MapData/Textures");
 		pic.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -285,7 +285,7 @@ public class Elements extends JPanel {
 			}
 		});
 		
-		JFileChooser audioFile = new JFileChooser();
+		JFileChooser audioFile = new JFileChooser("../MapData/Audio");
 		audioFile.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -303,7 +303,7 @@ public class Elements extends JPanel {
 			}
 		});
 		
-		JFileChooser audioPic = new JFileChooser();
+		JFileChooser audioPic = new JFileChooser("../MapData/Textures");
 		audioPic.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -347,7 +347,7 @@ public class Elements extends JPanel {
 		JLabel error = new JLabel("");
 		JButton importer = new JButton("Import Level");
 		
-		JFileChooser importFile = new JFileChooser();
+		JFileChooser importFile = new JFileChooser("../MapData/Room");
 		importFile.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
@@ -387,7 +387,7 @@ public class Elements extends JPanel {
 		
 		JButton export = new JButton("Export Level");
 		
-		JFileChooser exportFile = new JFileChooser();
+		JFileChooser exportFile = new JFileChooser("../MapData/Room");
 		exportFile.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -418,6 +418,16 @@ public class Elements extends JPanel {
 		end.add(importer);
 		end.add(export);
 		end.add(error);
+		JButton swap = new JButton("Map Editor");
+		swap.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mapBuilder.frame.setVisible(false);
+				mapBuilder.frame.disable();
+				mapBuilder.mapEdit();
+			}
+		});
+		end.add(swap);
 		//Naming schemes got out of control
 		add.setLayout(new BorderLayout());
 		add.add(backgroundChooser, BorderLayout.NORTH);

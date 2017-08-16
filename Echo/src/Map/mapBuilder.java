@@ -37,7 +37,7 @@ public class mapBuilder {
 		frame.add(visions, BorderLayout.WEST);
 		frame.add(render, BorderLayout.CENTER);
 		frame.add(elements, BorderLayout.EAST);
-		frame.setSize(width + 586, height + 49); //May need to rework this approximation when the elements tab changes
+		frame.setSize(width + 318, height + 49); //May need to rework this approximation when the elements tab changes
 		frame.setVisible(true);
 	}
 	static void roomEdit(){
