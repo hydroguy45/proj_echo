@@ -13,10 +13,6 @@ public class Room implements java.io.Serializable{
 	ArrayList<AudioLog> interactables = new ArrayList<AudioLog>();
 	ArrayList<Platform> platforms = new ArrayList<Platform>();
 	public String background = null;
-	boolean canGoNorth = false;
-	boolean canGoSouth = false;
-	boolean canGoEast = false;
-	boolean canGoWest = false;
 	int width;
 	int height;
 	public Room(int w, int h){
